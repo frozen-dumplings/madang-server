@@ -1,0 +1,29 @@
+{
+  "name": "madang",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node ./src/app.ts",
+    "lint": "eslint --ext .ts,.js ./"
+  },
+  "repository": "git@github.com:frozen-dumplings/madang-server.git",
+  "author": "chacham <ccm0702@naver.com>",
+  "contributors": [
+    "chacham <ccm0702@naver.com>",
+    "cosmicb0y <jang.hw73@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^13.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}
