@@ -2,6 +2,8 @@ import express from 'express';
 import logger from 'morgan';
 import http from 'http';
 
+import './env';
+
 import indexRouter from './routes/index';
 
 const app = express();
