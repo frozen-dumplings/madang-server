@@ -3,6 +3,7 @@ import logger from 'morgan';
 import http from 'http';
 
 import './env';
+import SocketServer from './socket';
 
 import indexRouter from './routes/index';
 
@@ -18,4 +19,7 @@ const port = Number(process.env.PORT || '3000');
 app.set('port', port);
 
 const server = http.createServer(app);
+
+SocketServer(server);
+
 server.listen(port);
