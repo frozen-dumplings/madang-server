@@ -3,9 +3,11 @@ import logger from 'morgan';
 import http from 'http';
 
 import './env';
-import SocketServer from './socket';
 
 import indexRouter from './routes/index';
+
+import SocketServer from './socket';
+import echoHandler from './socket-handler/echo-handler';
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-SocketServer(server);
+const io = SocketServer(server);
+
+echoHandler(io);
 
 server.listen(port);
