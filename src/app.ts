@@ -8,6 +8,7 @@ import indexRouter from './routes/index';
 
 import SocketServer from './socket';
 import echoHandler from './socket-handler/echo-handler';
+import messageHandler from './socket-handler/message-handler';
 
 const app = express();
 
@@ -25,5 +26,6 @@ const server = http.createServer(app);
 const io = SocketServer(server);
 
 echoHandler(io);
+messageHandler(io);
 
 server.listen(port);
