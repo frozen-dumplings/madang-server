@@ -1,9 +1,5 @@
 import { redisPublisher, redisSubscriber } from '../redis';
-
-interface Message {
-  timestamp: number;
-  message: string;
-}
+import Message from '../model/message';
 
 redisSubscriber.subscribe('message');
 
@@ -12,9 +8,9 @@ export default function (io: SocketIO.Server): void {
     socket.on('message', (msg: Message) => {
       redisPublisher.publish('message', JSON.stringify(msg));
     });
+  });
 
-    redisSubscriber.on('message', (channel, message) => {
-      io.emit('message', JSON.parse(message));
-    });
+  redisSubscriber.on('message', (channel, message) => {
+    io.emit('message', JSON.parse(message));
   });
 }
