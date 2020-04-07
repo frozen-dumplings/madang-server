@@ -1,24 +1,33 @@
-import { redisPublisher, redisSubscriber } from '../redis';
+import { redisClient, redisChannelPublisher, redisChannelSubscriber } from '../redis';
 import Message from '../model/message';
 
 interface JoinRequest {
   channel: string;
 }
 
-redisSubscriber.subscribe('channel');
+redisChannelSubscriber.subscribe('channel');
 
 export default function (io: SocketIO.Server): void {
   io.on('connect', (socket: SocketIO.Socket) => {
     socket.on('channel/register', (request: JoinRequest) => {
-      socket.join(request.channel);
+      redisClient.set(`channel/${socket.id}`, request.channel, () => {
+        socket.join(request.channel);
+      });
     });
 
     socket.on('channel/message', (msg: Message) => {
-      redisPublisher.publish('channel/message', JSON.stringify(msg));
+      redisClient.get(`channel/${socket.id}`, (err, channel) => {
+        const message = {
+          ...msg,
+          channel,
+        };
+        redisChannelPublisher.publish('channel', JSON.stringify(message));
+      });
     });
   });
 
-  redisSubscriber.on('channel/message', (channel, message) => {
-    io.to('channel').emit('message', JSON.parse(message));
+  redisChannelSubscriber.on('channel', (channel, message: string) => {
+    const msg: Message = JSON.parse(message);
+    io.to(msg.channel).emit('channel/message', msg);
   });
 }

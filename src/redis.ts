@@ -4,7 +4,16 @@ const options = {
   url: process.env.REDIS_URL,
 };
 
-const redisPublisher = redis.createClient(options);
-const redisSubscriber = redis.createClient(options);
+const redisClient = redis.createClient(options);
+const redisMessagePublisher = redis.createClient(options);
+const redisMessageSubscriber = redis.createClient(options);
+const redisChannelPublisher = redis.createClient(options);
+const redisChannelSubscriber = redis.createClient(options);
 
-export { redisPublisher, redisSubscriber };
+export {
+  redisClient,
+  redisMessagePublisher,
+  redisMessageSubscriber,
+  redisChannelPublisher,
+  redisChannelSubscriber,
+};
