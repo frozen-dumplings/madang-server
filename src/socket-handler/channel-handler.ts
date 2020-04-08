@@ -26,7 +26,7 @@ export default function (io: SocketIO.Server): void {
     });
   });
 
-  redisChannelSubscriber.on('channel', (channel, message: string) => {
+  redisChannelSubscriber.on('message', (channel, message: string) => {
     const msg: Message = JSON.parse(message);
     io.to(msg.channel).emit('channel/message', msg);
   });
