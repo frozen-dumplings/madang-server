@@ -5,15 +5,11 @@ const options = {
 };
 
 const redisClient = redis.createClient(options);
-const redisMessagePublisher = redis.createClient(options);
-const redisMessageSubscriber = redis.createClient(options);
-const redisChannelPublisher = redis.createClient(options);
-const redisChannelSubscriber = redis.createClient(options);
+const redisPublisher = redis.createClient(options);
+const redisSubscriber = redis.createClient(options);
 
 export {
   redisClient,
-  redisMessagePublisher,
-  redisMessageSubscriber,
-  redisChannelPublisher,
-  redisChannelSubscriber,
+  redisPublisher,
+  redisSubscriber,
 };

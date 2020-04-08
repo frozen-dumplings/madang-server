@@ -1,11 +1,11 @@
-import { redisClient, redisChannelPublisher, redisChannelSubscriber } from '../redis';
+import { redisClient, redisPublisher, redisSubscriber } from '../redis';
 import Message from '../model/message';
 
 interface JoinRequest {
   channel: string;
 }
 
-redisChannelSubscriber.subscribe('channel');
+redisSubscriber.subscribe('channel');
 
 export default function (io: SocketIO.Server): void {
   io.on('connect', (socket: SocketIO.Socket) => {
@@ -21,12 +21,12 @@ export default function (io: SocketIO.Server): void {
           ...msg,
           channel,
         };
-        redisChannelPublisher.publish('channel', JSON.stringify(message));
+        redisPublisher.publish('channel', JSON.stringify(message));
       });
     });
   });
 
-  redisChannelSubscriber.on('message', (channel, message: string) => {
+  redisSubscriber.on('message', (channel, message: string) => {
     const msg: Message = JSON.parse(message);
     io.to(msg.channel).emit('channel/message', msg);
   });
