@@ -8,6 +8,7 @@ interface JoinRequest {
 export default function (io: SocketIO.Server): void {
   io.on('connect', (socket: SocketIO.Socket) => {
     socket.on('channel/register', (request: JoinRequest) => {
+      socket.leaveAll();
       redisClient.set(`channel/${socket.id}`, request.channel, () => {
         socket.join(request.channel);
       });
